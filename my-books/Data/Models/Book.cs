@@ -12,13 +12,16 @@ namespace my_books.Data.Models {
         public DateTime? DateRead { get; set; }
         public int? Rate { get; set; }
         public string Genre { get; set; }
-        public string Author { get; set; }
         public string CoverURL { get; set; }
         public DateTime DateAdded { get; set; }
 
-        //Navigation Properties
+        //Navigation Properties(One to Many)
         public int PublisherId { get; set; }
         public Publisher Publisher { get; set; }
+
+        //Navigation Properties(Many to Many)
+        public List<Book_Author> Book_Authors { get; set; }
+
     }
 
 }
