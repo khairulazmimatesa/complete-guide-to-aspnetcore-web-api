@@ -26,6 +26,29 @@ namespace my_books.Data.Services {
 
             return _publisher;
         }
+
+        public List<Publisher> GetAllPublishers(string sortBy,string searchString) {
+
+           var allPublishers =  _context.Publishers.OrderBy(t => t.Name).ToList();
+
+            if (!string.IsNullOrEmpty(sortBy)) {
+                switch (sortBy) {
+                case "name_desc":
+                    allPublishers = allPublishers.OrderByDescending(t => t.Name).ToList();
+                    break;
+                default:
+                    break;
+                }
+
+            }
+            if (!string.IsNullOrEmpty(searchString)) {
+                allPublishers = allPublishers.Where(t => t.Name.Contains(searchString, StringComparison.CurrentCultureIgnoreCase)).ToList();
+
+            }
+
+            return allPublishers;
+        }
+
         public Publisher GetPublisherById(int id) => _context.Publishers.FirstOrDefault(t => t.Id == id);
         public PublisherWithBookAndAuthorsVM GetPublisherData(int publisherId) {
             var _publisherData = _context.Publishers.Where(t => t.Id == publisherId)

@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using my_books.ActionResults;
+using my_books.Data.Models;
 using my_books.Data.Services;
 using my_books.Data.ViewModels;
 using my_books.Exceptions;
@@ -16,6 +18,20 @@ namespace my_books.Controllers {
 
         public PublishersController(PublishersService publishersService) {
             _publishersService = publishersService;
+        }
+
+        [HttpGet("get-all-publishers")]
+        public IActionResult GetAllPublishers(string sortBy, string searchString) {
+ 
+            try {
+                var _result = _publishersService.GetAllPublishers(sortBy, searchString);
+
+                return Ok(_result);
+
+            } catch (Exception) {
+
+                return BadRequest("Sorry, We could not load Publishers");
+            }
         }
 
         [HttpPost("add-publisher")]
@@ -41,6 +57,7 @@ namespace my_books.Controllers {
             if (_result != null) {
                 return Ok(_result);
             } else {
+
                 return NotFound();
             }
 
