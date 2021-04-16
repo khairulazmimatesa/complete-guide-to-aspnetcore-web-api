@@ -112,11 +112,13 @@ namespace my_book_tests {
         public void DeletePublisherById_WithException() {
            
             Assert.That(() => publisherService.DeletePublisherById(99),
-                        Throws.Exception.TypeOf<PublisherNameException>().With.Message.EqualTo("The Publisher with id"));
+                        Throws.Exception.TypeOf<Exception>().With.Message.Contain("The Publisher with id"));
 
         }
         [Test,Order(11)]
         public void DeletePublisherById_WithoutException() {
+            Assert.That(() => publisherService.DeletePublisherById(1),
+            Is.Not.InnerException);
 
         }
 

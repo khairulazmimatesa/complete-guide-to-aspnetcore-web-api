@@ -5,6 +5,7 @@ using my_books.Controllers;
 using my_books.Data;
 using my_books.Data.Models;
 using my_books.Data.Services;
+using my_books.Data.ViewModels;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
@@ -33,27 +34,80 @@ namespace my_book_tests {
             publishersController = new PublishersController(publisherService, new NullLogger<PublishersController>());
         }
 
-        [Test]
+        [Test,Order(1)]
         public void HTTPGET_GetAllPublishers_WithSortBySearchStringPageNumber_ReturnOk_Test() {
+
+            //First Page
             IActionResult actionResult = publishersController.GetAllPublishers("name_desc","publisher",1);
-
             Assert.That(actionResult, Is.TypeOf<OkObjectResult>());
-
             var actionResultData = (actionResult as OkObjectResult).Value as List<Publisher>;
-
             Assert.That(actionResultData.First().Name, Is.EqualTo("Publisher 6"));
             Assert.That(actionResultData.First().Id, Is.EqualTo(6));
             Assert.That(actionResultData.Count, Is.EqualTo(5));
-            
-            IActionResult actionResult = publishersController.GetAllPublishers("name_desc","publisher",1);
 
+            //Second Page
+            IActionResult actionResultSecondPage = publishersController.GetAllPublishers("name_desc","publisher",2);
+            Assert.That(actionResultSecondPage, Is.TypeOf<OkObjectResult>());
+            var actionResultSecondPageData = (actionResultSecondPage as OkObjectResult).Value as List<Publisher>;
+            Assert.That(actionResultSecondPageData.First().Name, Is.EqualTo("Publisher 1"));
+            Assert.That(actionResultSecondPageData.First().Id, Is.EqualTo(1));
+            Assert.That(actionResultSecondPageData.Count, Is.EqualTo(1));
+        }
+
+        [Test,Order(2)]
+        public void HTTPGET_GetPublisherById_ReturnOk_Test() {
+
+            IActionResult actionResult = publishersController.GetPublisherById(1);
             Assert.That(actionResult, Is.TypeOf<OkObjectResult>());
+            var actionResultData = (actionResult as OkObjectResult).Value as Publisher;
+            Assert.That(actionResultData.Name, Is.EqualTo("publisher 1").IgnoreCase);
+            Assert.That(actionResultData.Id, Is.EqualTo(1));
 
-            var actionResultData = (actionResult as OkObjectResult).Value as List<Publisher>;
+        }
+        [Test,Order(3)]
+        public void HTTPGET_GetPublisherById_ReturnNotFound_Test() {
 
-            Assert.That(actionResultData.First().Name, Is.EqualTo("Publisher 6"));
-            Assert.That(actionResultData.First().Id, Is.EqualTo(6));
-            Assert.That(actionResultData.Count, Is.EqualTo(5));
+            IActionResult actionResult = publishersController.GetPublisherById(99);
+            Assert.That(actionResult, Is.TypeOf<NotFoundResult>());
+        }
+        [Test,Order(4)]//Decorator
+        public void HTTPPOST_AddPublisher_ReturnCreated_Test() {
+            var newPublisherVM = new PublisherVM() {
+                Name = "New Publisher"
+            };
+
+            IActionResult actionResult = publishersController.AddPublisher(newPublisherVM);
+
+            Assert.That(actionResult, Is.TypeOf<CreatedResult>());
+
+        }
+        [Test,Order(5)]//Decorator
+        public void HTTPPOST_AddPublisher_ReturnBadRequest_Test() {
+            var newPublisherVM = new PublisherVM() {
+                Name = "123 New Publisher"
+            };
+
+            IActionResult actionResult = publishersController.AddPublisher(newPublisherVM);
+
+            Assert.That(actionResult, Is.TypeOf<BadRequestObjectResult>());
+
+        }
+
+        [Test,Order(6)]//Decorator
+        public void HTTPPOST_DeletePublisherById_ReturnOk_Test() {
+            int publisherId = 6;
+
+            IActionResult actionResult = publishersController.DeletePublisherById(publisherId);
+
+            Assert.That(actionResult, Is.TypeOf<OkResult>());
+        }
+        [Test,Order(7)]//Decorator
+        public void HTTPPOST_DeletePublisherById_ReturnBadRequent_Test() {
+            int publisherId = 6;
+
+            IActionResult actionResult = publishersController.DeletePublisherById(publisherId);
+
+            Assert.That(actionResult, Is.TypeOf<BadRequestObjectResult>());
         }
 
 
