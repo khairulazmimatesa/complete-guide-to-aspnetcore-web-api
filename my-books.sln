@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31129.286
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "my-books", "my-books\my-books.csproj", "{F4D32AC9-519B-4CDF-9394-165F5592E489}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "my-books", "my-books\my-books.csproj", "{F4D32AC9-519B-4CDF-9394-165F5592E489}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "my-book-tests", "my-book-tests\my-book-tests.csproj", "{2D4EDB44-5110-4F17-AFAA-158C1A98980F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{F4D32AC9-519B-4CDF-9394-165F5592E489}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F4D32AC9-519B-4CDF-9394-165F5592E489}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F4D32AC9-519B-4CDF-9394-165F5592E489}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2D4EDB44-5110-4F17-AFAA-158C1A98980F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2D4EDB44-5110-4F17-AFAA-158C1A98980F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2D4EDB44-5110-4F17-AFAA-158C1A98980F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2D4EDB44-5110-4F17-AFAA-158C1A98980F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
